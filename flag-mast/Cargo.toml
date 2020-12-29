@@ -1,6 +1,6 @@
 [package]
 name = "flag-mast"
-version = "0.2.0"
+version = "0.2.1"
 description = "Ergonomic Rust bit flags"
 homepage = "https://github.com/toshokan/flag-mast"
 repository = "https://github.com/toshokan/flag-mast"
@@ -12,4 +12,4 @@ edition = "2018"
 keywords = ["ffi", "bitflags"]
 
 [dependencies]
-flag-mast-derive = { version = "0.2.0", path = "../flag-mast-derive" }
+flag-mast-derive = { version = "0.2.1", path = "../flag-mast-derive" }
