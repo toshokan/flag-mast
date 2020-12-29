@@ -125,7 +125,7 @@ This format only displays the flags that are set.
 use flag_mast::*;
 
 #[derive(Flags, Default)]
-#[flag_debug]
+#[flag_debug(compact)]
 #[flag(name = "one", value = 4)]
 #[flag(name = "second", method_name = "two", value = 8)]
 #[flag(name = "three", value = 16)]
