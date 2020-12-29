@@ -235,22 +235,39 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	    }
 	}
 
-	let (doc, set_doc, only_doc) = if let Some(doc) = flag.doc {
-	    let set_str = format!("{}\n\nSets the flag to the given value.", doc);
-	    let only_str = format!("{}\n\nChecks if this flag is the only one set.", doc);
-	    (
-		quote!{
-		    #[doc = #doc]
-		},
-		quote!{
-		    #[doc = #set_str]
-		},
-		quote!{
-		    #[doc = #only_str]
-		}
-	    )
-	} else {
-	    (quote!{}, quote!{}, quote!{})
+	let (doc, set_doc, only_doc) = {
+	    let doc_template = "Gets the value for the flag.";
+	    let set_template = "Sets the flag to the given value.";
+	    let only_template = "Checks if this flag is the only one set.";
+	    
+	    if let Some(doc) = flag.doc {
+		let doc = format!("{}\n\n{}", doc, doc_template);
+		let set_str = format!("{}\n\n{}", doc, set_template);
+		let only_str = format!("{}\n\n{}", doc, only_template);
+		(
+		    quote!{
+			#[doc = #doc]
+		    },
+		    quote!{
+			#[doc = #set_str]
+		    },
+		    quote!{
+			#[doc = #only_str]
+		    }
+		)
+	    } else {
+		(
+		    quote!{
+			#[doc = #doc_template]
+		    },
+		    quote!{
+			#[doc = #set_template]
+		    },
+		    quote!{
+			#[doc = #only_template]
+		    }
+		)
+	    }
 	};
 
 	let setter_name = format_ident!("set_{}", method_name);
