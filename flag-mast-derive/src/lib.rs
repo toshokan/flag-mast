@@ -241,12 +241,12 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	    let only_template = "Checks if this flag is the only one set.";
 	    
 	    if let Some(doc) = flag.doc {
-		let doc = format!("{}\n\n{}", doc, doc_template);
+		let doc_str = format!("{}\n\n{}", doc, doc_template);
 		let set_str = format!("{}\n\n{}", doc, set_template);
 		let only_str = format!("{}\n\n{}", doc, only_template);
 		(
 		    quote!{
-			#[doc = #doc]
+			#[doc = #doc_str]
 		    },
 		    quote!{
 			#[doc = #set_str]
