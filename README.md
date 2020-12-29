@@ -102,14 +102,14 @@ fn baz() {
 }
 ```
 
-This will print
+This will print (note that the _method name_ is used)
 ```
 Buttons { one: true, two: false, three: true }
 ---
 Buttons {
     one: true,
-	two: false,
-	three: false
+    two: false,
+    three: false
 }
 ```
 
@@ -129,7 +129,7 @@ struct Buttons(#[flag_backing_field] u16)
 fn baz() {
   let mut buttons = Buttons::default();
   buttons.set_one(true);
-  buttons.set_three(true);
+  buttons.set_two(true);
   
   println!("{:?}", buttons);
   println!("---");
@@ -137,13 +137,13 @@ fn baz() {
 }
 ```
 
-This will print
+This will print (note that the _name_ is used)
 ```
-Buttons { "one", "three" }
+Buttons { "one", "second" }
 ---
 Buttons {
     "one",
-    "three",
+    "second",
 }
 ```
 
