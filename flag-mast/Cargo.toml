@@ -1,6 +1,9 @@
 [package]
 name = "flag-mast"
 version = "0.1.0"
+description = "Ergonomic Rust bit flags"
+homepage = "https://github.com/toshokan/flag-mast"
+repository = "https://github.com/toshokan/flag-mast"
 authors = ["toshokan <toshokan@shojigate.net>"]
 license = "MIT OR Apache-2.0"
 edition = "2018"
