@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+	"flag-mast-derive",
+	"flag-mast"
+]
