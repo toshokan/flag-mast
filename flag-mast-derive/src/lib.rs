@@ -225,15 +225,15 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	let setter_name = format_ident!("set_{}", method_name);
 	let exclusive_name = format_ident!("only_{}", method_name);
 	let flag_methods = quote!{
-	    fn #method_name(&self) -> bool {
+	    pub fn #method_name(&self) -> bool {
 		self.#backing_field_name & (#value) == (#value)
 	    }
 
-	    fn #exclusive_name(&self) -> bool {
+	    pub fn #exclusive_name(&self) -> bool {
 		self.#backing_field_name | (#value) == (#value)
 	    }
 
-	    fn #setter_name(&mut self, value: bool) -> &Self {
+	    pub fn #setter_name(&mut self, value: bool) -> &Self {
 		if value {
 		    self.#backing_field_name |= (#value);
 		} else {
