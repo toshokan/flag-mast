@@ -24,7 +24,7 @@ fn foo() {
   let mut dog = Dog::default();
   dog.set_can_bark(true)
      .set_can_sit(false)
-	 .set_is_brown(true);
+     .set_is_brown(true);
 	 
   if dog.is_brown() {
     println!("Cute doggo!");
@@ -72,7 +72,7 @@ struct Colour{
 }
 
 fn bar() {
-  let colour = Colour::default();
+  let mut colour = Colour::default();
   colour.set_blue(true);
   colour.set_red(true);
   
