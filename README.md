@@ -32,9 +32,13 @@ fn foo() {
 The derive macro does not change the underlying layout of the struct, it can even be `repr(C)`!.
 
 The `name` argument is the canonical name of the flag, which need not be a valid Rust identifier or follow idiomatic Rust naming conventions.
+
 If the `name` argument _is_ appropriate as a Rust identifier (and you don't want to customize or prefix it), the `method_name` argument can be ommitted.
+
 The `value` argument can either be an integer literal or a string containing an expression which resolves to the value for the flag.
+
 The `value` needn't have to have the same exact type as the backing field, it only has to be castable to that type.
+
 The `flag_backing_field` attribute specifies which field of the struct is used to hold the bit flags.
 
 This means we can also have
