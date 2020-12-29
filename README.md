@@ -84,7 +84,7 @@ fn bar() {
 
 ### Automatic Debug Implementation
 
-The derive macro can also automaticall generate a `Debug` implementation for you in a way that makes sense for your flags.
+The derive macro can also automatically generate a `Debug` implementation for you in a way that makes sense for your flags.
 This behaviour is controlled by an additional attribute.
 
 ```rust
