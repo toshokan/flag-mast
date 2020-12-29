@@ -7,6 +7,7 @@ struct Flag {
     value: TokenStream,
     name: String,
     method_name: Option<syn::Ident>,
+    doc: Option<String>,
 }
 
 impl Flag {
@@ -74,10 +75,20 @@ fn get_method_name(lit: &syn::Lit) -> syn::Ident {
     }
 }
 
+fn get_doc(lit: &syn::Lit) -> String {
+    use syn::Lit::*;
+
+    match &lit {
+	Str(s) => s.value(),
+	_ => panic!("Bad doc attribute")
+    }
+}
+
 fn parse_flag(attr: syn::Meta, value_type: &syn::Type) -> Flag {
     let mut name = None;
     let mut value = None;
     let mut method_name = None;
+    let mut doc = None;
     
     if let syn::Meta::List(attr) = &attr {
 	use syn::{Meta::NameValue, NestedMeta::Meta};
@@ -90,7 +101,8 @@ fn parse_flag(attr: syn::Meta, value_type: &syn::Type) -> Flag {
 			"name" => name = Some(get_name(&m.lit)),
 			"value" => value = Some(get_value(&m.lit, value_type)),
 			"method_name" => method_name = Some(get_method_name(&m.lit)),
-			s => abort!(arg, r#"Unknown configuration option "{}". Expected one of [name, value, method_name]"#, s)
+			"doc" => doc = Some(get_doc(&m.lit)),
+			s => abort!(arg, r#"Unknown configuration option "{}". Expected one of [name, value, method_name, doc]"#, s)
 		    }
 		}
 	    }
@@ -101,7 +113,8 @@ fn parse_flag(attr: syn::Meta, value_type: &syn::Type) -> Flag {
 	Flag {
 	    name,
 	    value,
-	    method_name
+	    method_name,
+	    doc
 	}
     } else {
 	abort!(attr, "Missing name or value argument for flag.")
@@ -222,17 +235,36 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	    }
 	}
 
+	let (doc, set_doc, only_doc) = if let Some(doc) = flag.doc {
+	    let set_str = format!("{}\n\nSets the flag to the given value.", doc);
+	    let only_str = format!("{}\n\nChecks if this flag is the only one set.", doc);
+	    (
+		quote!{
+		    #[doc = #doc]
+		},
+		quote!{
+		    #[doc = #set_str]
+		},
+		quote!{
+		    #[doc = #only_str]
+		}
+	    )
+	} else {
+	    (quote!{}, quote!{}, quote!{})
+	};
+
 	let setter_name = format_ident!("set_{}", method_name);
 	let exclusive_name = format_ident!("only_{}", method_name);
 	let flag_methods = quote!{
+	    #doc
 	    pub fn #method_name(&self) -> bool {
 		self.#backing_field_name & (#value) == (#value)
 	    }
-
+	    #only_doc
 	    pub fn #exclusive_name(&self) -> bool {
 		self.#backing_field_name | (#value) == (#value)
 	    }
-
+	    #set_doc
 	    pub fn #setter_name(&mut self, value: bool) -> &Self {
 		if value {
 		    self.#backing_field_name |= (#value);
