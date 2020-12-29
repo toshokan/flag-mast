@@ -3,7 +3,7 @@
 Ergonomic Rust bit flags
 
 ## Usage
-This `flag-mast` crate provides a derive macro to help create ergonomic C-compatible bit flags.
+The `flag-mast` crate provides a derive macro to help create ergonomic C-compatible bit flags.
 
 ### Example
 ```rust
