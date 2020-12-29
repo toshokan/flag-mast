@@ -48,7 +48,7 @@ fn get_value(lit: &syn::Lit, value_type: &syn::Type) -> TokenStream {
 	        }
 	    };
 	    quote! {
-		#expr as #value_type
+		(#expr) as #value_type
 	    }
 	},
 	_ => abort!(lit, "Bad value, must be an integer literal or string.")
@@ -223,9 +223,14 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	}
 
 	let setter_name = format_ident!("set_{}", method_name);
+	let exclusive_name = format_ident!("only_{}", method_name);
 	let flag_methods = quote!{
 	    fn #method_name(&self) -> bool {
-		self.#backing_field_name & (#value) != 0
+		self.#backing_field_name & (#value) == (#value)
+	    }
+
+	    fn #exclusive_name(&self) -> bool {
+		self.#backing_field_name | (#value) == (#value)
 	    }
 
 	    fn #setter_name(&mut self, value: bool) -> &Self {
@@ -262,7 +267,7 @@ pub fn derive_flags(input: TokenStream) -> TokenStream {
 	DebugMode::Compact => quote!{
 	    impl core::fmt::Debug for #struct_name {
 		fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-		    write!(f, "{} ", stringify!(#struct_name));
+		    write!(f, "{} ", stringify!(#struct_name))?;
 		    let mut dbg = f.debug_set();
 		    #(#debug_fragments)*
 		    dbg.finish()
