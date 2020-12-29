@@ -38,7 +38,7 @@ The `value` needn't have to have the same exact type as the backing field, it on
 The `flag_backing_field` attribute specifies which field of the struct is used to hold the bit flags.
 
 This means we can also have
-```
+```rust
 use flag_mast::*;
 
 const BLUE: u8 = 0x1;
