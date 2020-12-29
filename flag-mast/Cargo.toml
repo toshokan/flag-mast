@@ -8,4 +8,4 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-flag-mast-derive = { path = "../flag-mast-derive" }
+flag-mast-derive = { version = "0.1.0", path = "../flag-mast-derive" }
