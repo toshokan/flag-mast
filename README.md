@@ -2,9 +2,9 @@
 
 Ergonomic Rust bit flags
 
-![Crates.io](https://img.shields.io/crates/v/flag-mast)
-![Docs.rs](https://docs.rs/flag-mast/badge.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/toshokan/flag-mast)
+[![Crates.io](https://img.shields.io/crates/v/flag-mast)](https://crates.io/crates/flag-mast)
+[![Docs.rs](https://docs.rs/flag-mast/badge.svg)](https://docs.rs/flag-mast)
+[![GitHub top language](https://img.shields.io/github/languages/top/toshokan/flag-mast)](https://github.com/toshokan/flag-mast)
 
 
 ## Usage
